@@ -13,6 +13,24 @@ export default class App extends Component {
       .then(user => this.setState({ username: user.username }));
   }
 
+  handleErrorClick() {
+    try {
+      this.doSomething();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  doSomething() {
+    throw new Error('something wrong');
+  }
+
+  handleMeClick() {
+    fetch('/api/getUsername')
+      .then(res => res.json())
+      .then(user => this.setState({ username: user.username }));
+  }
+
   render() {
     return (
       <div>
@@ -21,6 +39,8 @@ export default class App extends Component {
         ) : (
           <h1>Loading.. please wait!</h1>
         )}
+        <button onClick={this.handleErrorClick}>error</button>
+        <button onClick={this.handleMeClick}>me</button>
       </div>
     );
   }
